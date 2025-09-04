@@ -27,6 +27,9 @@ RUN unzip /tmp/ossn.zip -d /var/www/html/ \
     && mv /var/www/html/ossn/* /var/www/html/ \
     && rm -rf /var/www/html/ossn /tmp/ossn.zip
 
+# Replace settings.php with the latest from GitHub
+RUN curl -L -o /var/www/html/installation/pages/settings.php https://raw.githubusercontent.com/opensource-socialnetwork/docker/refs/heads/main/settings.php
+
 # Create a data directory for OSSN (used for file storage)
 RUN mkdir -p /var/www/ossn_data && \
     chown -R www-data:www-data /var/www/ossn_data
