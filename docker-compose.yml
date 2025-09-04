@@ -14,8 +14,6 @@ services:
       - MYSQL_PASSWORD=ossnpassword
     depends_on:
       - db
-    networks:
-      - ossn_net
     restart: unless-stopped
 
   db:
@@ -27,13 +25,8 @@ services:
       MYSQL_PASSWORD: ossnpassword
     volumes:
       - db_data:/var/lib/mysql
-    networks:
-      - ossn_net
     restart: unless-stopped
 
 volumes:
   db_data:
   ossn_data:
-
-networks:
-  ossn_net:
