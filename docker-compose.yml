@@ -4,7 +4,7 @@ services:
     build:
       context: https://github.com/opensource-socialnetwork/docker.git
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ossn_data:/var/www/ossn_data
     environment:
