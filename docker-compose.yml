@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  web:
+    build:
+      context: https://github.com/opensource-socialnetwork/docker.git
+    ports:
+      - "8080:80"
+    volumes:
+      - ossn_data:/var/www/ossn_data
+    environment:
+      - OSSN_DATA=/var/www/ossn_data
+    depends_on:
+      - db
+    restart: unless-stopped
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ossndb
+      MYSQL_USER: ossnuser
+      MYSQL_PASSWORD: ossnpassword
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  ossn_data:
