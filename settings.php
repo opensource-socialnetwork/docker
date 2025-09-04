@@ -24,7 +24,7 @@ if(substr($notification_email['host'], 0, 4) == 'www.'){
         <input type="text" name="dbuser" placeholder="<?php echo ossn_installation_print('ossn:dbuser'); ?>" value="<?php echo getenv('MYSQL_USER');?>" readonly="readonly"/>
         <input type="password" name="dbpwd" placeholder="<?php echo ossn_installation_print('ossn:dbpassword'); ?>" value="<?php echo getenv('MYSQL_PASSWORD');?>" readonly="readonly"/>
         <input type="text" name="dbname" placeholder="<?php echo ossn_installation_print('ossn:dbname'); ?>" value="<?php echo getenv('MYSQL_DATABASE');?>" readonly="readonly"/>
-        <input type="text" name="dbhost" placeholder="<?php echo ossn_installation_print('ossn:dbhost'); ?>" value="ossndb.host" readonly="readonly" />
+        <input type="text" name="dbhost" placeholder="<?php echo ossn_installation_print('ossn:dbhost'); ?>" value="db" readonly="readonly" />
     </div>
 
     <div>

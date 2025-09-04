@@ -15,10 +15,7 @@ services:
     depends_on:
       - db
     networks:
-      ossn_net:
-        aliases:
-          - web
-          - ossndb.host
+      - ossn_net
     restart: unless-stopped
 
   db:
@@ -31,7 +28,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      ossn_net:
+      - ossn_net
     restart: unless-stopped
 
 volumes:
