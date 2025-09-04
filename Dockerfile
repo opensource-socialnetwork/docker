@@ -1,9 +1,11 @@
 # Use a PHP image with Apache as the base
 FROM php:8.1-apache
 
-# Install required PHP extensions
+# Install required packages and PHP extensions
 RUN apt-get update && apt-get install -y \
     unzip \
+    zip \
+    nano \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -11,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd mysqli zip mbstring pdo_mysql opcache exif
+    && docker-php-ext-install gd mysqli zip mbstring pdo_mysql opcache exif \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Enable EXIF for PHP
 RUN docker-php-ext-enable exif

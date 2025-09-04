@@ -1,4 +1,3 @@
-version: '3.7'
 services:
   web:
     build:
@@ -9,9 +8,14 @@ services:
       - ossn_data:/var/www/ossn_data
     environment:
       - OSSN_DATA=/var/www/ossn_data
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=ossndb
+      - MYSQL_USER=ossnuser
+      - MYSQL_PASSWORD=ossnpassword
     depends_on:
       - db
     restart: unless-stopped
+
   db:
     image: mysql:8.0
     environment:
