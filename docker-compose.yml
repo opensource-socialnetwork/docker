@@ -18,6 +18,7 @@ services:
       ossn_net:
         aliases:
           - web
+          - ossndb.host
     restart: unless-stopped
 
   db:
@@ -31,8 +32,6 @@ services:
       - db_data:/var/lib/mysql
     networks:
       ossn_net:
-        aliases:
-          - ossndb.host
     restart: unless-stopped
 
 volumes:
