@@ -1,19 +1,10 @@
 FROM php:8.4-apache
 
-# Suppress interactive prompts during build
-ARG DEBIAN_FRONTEND=noninteractive
-
-# Pre-seed Postfix debconf answers so it installs silently
-RUN echo "postfix postfix/mailname string localhost" | debconf-set-selections && \
-    echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-
-# Install required packages and PHP extensions
+# Install required tools and PHP extensions
 RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     nano \
-    postfix \
-    mailutils \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -26,9 +17,6 @@ RUN apt-get update && apt-get install -y \
 
 # Enable EXIF and Apache rewrite module
 RUN docker-php-ext-enable exif && a2enmod rewrite
-
-# Route PHP mail calls to internal Postfix sendmail
-RUN echo "sendmail_path = /usr/sbin/sendmail -t -i" > /usr/local/etc/php/conf.d/sendmail.ini
 
 # Download and extract OSSN
 ADD https://www.opensource-socialnetwork.org/download_ossn/latest/build.zip /tmp/ossn.zip
@@ -49,5 +37,4 @@ RUN mkdir -p /var/www/ossn_data && \
 
 EXPOSE 80
 
-# Start Postfix service before launching Apache
-CMD ["sh", "-c", "service postfix start && apache2-foreground"]
+CMD ["apache2-foreground"]
