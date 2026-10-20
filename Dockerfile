@@ -1,7 +1,8 @@
 # Updated base image to PHP 8.4 Apache
 FROM php:8.4-apache
 
-# Added postfix and mailutils to required packages
+# Prevent apt-get interactive prompts during build
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     unzip \
     zip \
