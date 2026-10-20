@@ -1,11 +1,13 @@
-# Use a PHP image with Apache as the base
-FROM php:8.1-apache
+# Updated base image to PHP 8.4 Apache
+FROM php:8.4-apache
 
-# Install required packages and PHP extensions
+# Added postfix and mailutils to required packages
 RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     nano \
+    postfix \
+    mailutils \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -18,8 +20,12 @@ RUN apt-get update && apt-get install -y \
 
 # Enable EXIF for PHP
 RUN docker-php-ext-enable exif
+
 # Enable mod_rewrite for Apache
 RUN a2enmod rewrite
+
+# 3. Configure PHP sendmail path to use local Postfix binary
+RUN echo "sendmail_path = /usr/sbin/sendmail -t -i" > /usr/local/etc/php/conf.d/sendmail.ini
 
 # Download and extract OSSN
 ADD https://www.opensource-socialnetwork.org/download_ossn/latest/build.zip /tmp/ossn.zip
@@ -45,5 +51,5 @@ RUN chown -R www-data:www-data /var/www/html/ && \
 # Expose port 80
 EXPOSE 80
 
-# Default command
-CMD ["apache2-foreground"]
+# 4. Start postfix service, then start Apache in the foreground
+CMD service postfix start && apache2-foreground
