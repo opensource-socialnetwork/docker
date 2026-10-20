@@ -53,4 +53,5 @@ RUN chown -R www-data:www-data /var/www/html/ && \
 EXPOSE 80
 
 # 4. Start postfix service, then start Apache in the foreground
-CMD service postfix start && apache2-foreground
+CMD ["sh", "-c", "service postfix start && apache2-foreground"]
+
